@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+body div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.column, form {
+    display: flex;
+    flex-direction: column;
+}
