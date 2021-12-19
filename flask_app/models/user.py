@@ -17,7 +17,7 @@ class User:
     def validate_user(user):
         is_valid = True
         errors = 0
-        if not EMAIL_REGEX.match(user['email']) or user['email'] == '' or User.email_check(user['email']): #or exists in database
+        if not EMAIL_REGEX.match(user['email']) or user['email'] == '' or not User.email_check(user['email']): #or exists in database
             flash(u"Invalid Email", "registration")
             errors += 1
         if user['first_name'] == '' or not str.isalpha(user['first_name'])  or not len(user['first_name'])> 2:
@@ -38,15 +38,18 @@ class User:
 
     @staticmethod
     def email_check(email):
+        email_validate = True
         query = "SELECT email from USERS"
         results = connectToMySQL('login_reg').query_db(query)
         print(results)
         for emails in results:
-            return email == emails['email']
+            if email == emails['email']:
+                email_validate = False
+        return email_validate
     
     @staticmethod
     def login_validator(data):
-        query = "SELECT email, password FROM  users"
+        query = "SELECT email FROM  users"
         results = connectToMySQL('login_reg').query_db(query)
         for users in results:
             if data['email'] == users['email']:
