@@ -29,7 +29,7 @@ class User:
         if user['password'] == '' or not len(user['password']) > 7:
             flash(u"Invalid Password", "registration")
             errors += 1
-        if not user['password'] == user['pwconfirm']:
+        if not user['password'] == user['pwconfirm'] or user['pwconfirm'] == '':
             flash(u"Passwords must match.", "registration")
             errors+= 1
         if errors > 0:
